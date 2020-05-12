@@ -3,10 +3,17 @@
 }
 
 html,
-body,
-#viewDiv {
-  padding: 0;
-  margin: 0;
-  height: 100%;
+body, #viewDiv{
+  font-family: Avenir Next W00;
+  font-size: 14px;
   width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+
+.action {
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
 }
