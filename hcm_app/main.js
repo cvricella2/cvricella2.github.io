@@ -26,24 +26,26 @@ function(Map,MapView,esriRequest,Portal,OAuthInfo,esriId,domStyle, domAttr, on, 
           popup: true // inline redirects don't require any additional app configuration
         });
 
-        esriId.registerOAuthInfos([info]);
+        displayMap();
 
-        // send users to arcgis.com to login
-        on(dom.byId("sign-in"), "click", function() {
-          esriId.getCredential(portalUrl);
-        });
-
-        // log out and reload
-        on(dom.byId("sign-out"), "click", function() {
-          esriId.destroyCredentials();
-          window.location.reload();
-        });
-
-        esriId.checkSignInStatus(portalUrl).then(function() {
-         dom.byId('anonymousPanel').style.display = 'none';
-         dom.byId('personalizedPanel').style.display = 'block'
-         displayMap();
-       });
+       //  esriId.registerOAuthInfos([info]);
+       //
+       //  // send users to arcgis.com to login
+       //  on(dom.byId("sign-in"), "click", function() {
+       //    esriId.getCredential(portalUrl);
+       //  });
+       //
+       //  // log out and reload
+       //  on(dom.byId("sign-out"), "click", function() {
+       //    esriId.destroyCredentials();
+       //    window.location.reload();
+       //  });
+       //
+       //  esriId.checkSignInStatus(portalUrl).then(function() {
+       //   dom.byId('anonymousPanel').style.display = 'none';
+       //   dom.byId('personalizedPanel').style.display = 'block'
+       //   displayMap();
+       // });
 
 
 
