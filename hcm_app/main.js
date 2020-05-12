@@ -18,7 +18,7 @@ require([
 function(Map,MapView,esriRequest,Portal,OAuthInfo,esriId,domStyle, domAttr, on, dom, FeatureLayer,BasemapGallery,Legend,Expand) {
 
         // ArcGIS Online or your portal address
-        var portalUrl = "https://www.arcgis.com/sharing";
+        var portalUrl = "https://www.arcgis.com";
 
         // subsitute your own client ID to identify who spawned the login and check for a matching redirect URI
         var info = new OAuthInfo({
