@@ -8,7 +8,7 @@ require([
   "dojo/dom-style",
   "dojo/dom-attr",
   "dojo/on",
-  "dojo/dom"
+  "dojo/dom",
   "esri/layers/FeatureLayer",
   "esri/widgets/BasemapGallery",
   "esri/widgets/Legend",
