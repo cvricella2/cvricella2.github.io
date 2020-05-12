@@ -50,9 +50,10 @@ function(Map,MapView,esriRequest,Portal,OAuthInfo,esriId,domStyle, domAttr, on, 
         function displayMap(){
           var portal = new Portal();
 
-          portal.load().then(function()){
+          portal.load().then(function(){
             dom.byId('viewDiv').style.display = 'flex';
-          }
+          });
+
           var map = new Map({
             basemap: "dark-gray-vector"
           });
