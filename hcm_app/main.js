@@ -23,7 +23,7 @@ function(Map,MapView,esriRequest,Portal,OAuthInfo,esriId,domStyle, domAttr, on, 
         // subsitute your own client ID to identify who spawned the login and check for a matching redirect URI
         var info = new OAuthInfo({
           appId: "BGfsEscj4xQYcIG6", //*** Your Client ID value goes here ***//
-          popup: false // inline redirects don't require any additional app configuration
+          popup: true // inline redirects don't require any additional app configuration
         });
 
         esriId.registerOAuthInfos([info]);
