@@ -2,14 +2,49 @@ require([
   "esri/Map",
   "esri/views/MapView",
   "esri/request",
+  "esri/portal/Portal",
+  "esri/identity/OAuthInfo",
   "esri/identity/IdentityManager",
+  "dojo/dom-style",
+  "dojo/dom-attr",
+  "dojo/on",
+  "dojo/dom"
   "esri/layers/FeatureLayer",
   "esri/widgets/BasemapGallery",
   "esri/widgets/Legend",
   "esri/widgets/Expand"
 ],
 
-function(Map, MapView, esriRequest, esriId, FeatureLayer, BasemapGallery, Legend, Expand) {
+function(Map,MapView,esriRequest,Portal,OAuthInfo,esriId, domStyle, domAttr, on, dom, FeatureLayer,BasemapGallery,Legend,Expand) {
+
+        // ArcGIS Online or your portal address
+        var portalUrl = "https://www.arcgis.com/sharing";
+
+        // subsitute your own client ID to identify who spawned the login and check for a matching redirect URI
+        var info = new OAuthInfo({
+          appId: "BGfsEscj4xQYcIG6", //*** Your Client ID value goes here ***//
+          popup: false // inline redirects don't require any additional app configuration
+        });
+
+        identityManager.registerOAuthInfos([info]);
+
+        // send users to arcgis.com to login
+        on(dom.byId("sign-in"), "click", function() {
+          esriId.getCredential(portalUrl);
+        });
+
+        // log out and reload
+        on(dom.byId("sign-out"), "click", function() {
+          esriId.destroyCredentials();
+          window.location.reload();
+        });
+
+        identityManager.checkSignInStatus(portalUrl).then(function() {
+         dom.byId('anonymousPanel').style.display = 'none';
+         dom.byId('personalizedPanel').style.display = 'block'
+       });
+
+      });
         var map = new Map({
           basemap: "dark-gray-vector"
         });
@@ -25,23 +60,23 @@ function(Map, MapView, esriRequest, esriId, FeatureLayer, BasemapGallery, Legend
         // https://developers.arcgis.com/documentation/core-concepts/security-and-authentication/
         // https://developers.arcgis.com/javascript/latest/guide/secure-resources/
         // https://developers.arcgis.com/javascript/latest/api-reference/esri-identity-IdentityManager.html
-        var url = "https://www.arcgis.com/sharing/rest/generateToken"
-        var options = {
-        query:{
-          f:"json",
-          username:"carl.vricella_psegli",
-          password:"@phineasjohnson18S",
-          referer:"https://www.arcgis.com"
-        },
-        method:"post",
-        responseType:"json"}
-
-        esriRequest(url, options).then(function(response){
-          console.log(response.data.token)
-          var token = {token:response.data.token,
-                       server: "https://www.arcgis.com/sharing/rest"}
-          esriId.registerToken(token);
-        });
+        // var url = "https://www.arcgis.com/sharing/rest/generateToken"
+        // var options = {
+        // query:{
+        //   f:"json",
+        //   username:"carl.vricella_psegli",
+        //   password:"@phineasjohnson18S",
+        //   referer:"https://www.arcgis.com"
+        // },
+        // method:"post",
+        // responseType:"json"}
+        //
+        // esriRequest(url, options).then(function(response){
+        //   console.log(response.data.token)
+        //   var token = {token:response.data.token,
+        //                server: "https://www.arcgis.com/sharing/rest"}
+        //   esriId.registerToken(token);
+        // });
 
         var popupTemplate = { // autocasts as new PopupTemplate()
          title: "{Name}",
