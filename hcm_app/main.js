@@ -42,18 +42,88 @@ function(Map,MapView,esriRequest,Portal,OAuthInfo,esriId,domStyle, domAttr, on, 
         esriId.checkSignInStatus(portalUrl).then(function() {
          dom.byId('anonymousPanel').style.display = 'none';
          dom.byId('personalizedPanel').style.display = 'block'
+         displayMap();
        });
 
-        var map = new Map({
-          basemap: "dark-gray-vector"
-        });
 
-        var view = new MapView({
-          container: "viewDiv",
-          map: map,
-          zoom: 13,
-          center: [-73.549884, 40.699494] // longitude, latitude
-        });
+
+        function displayMap(){
+          var portal = new Portal();
+
+          portal.load().then(function()){
+            dom.byId('viewDiv').style.display = 'flex';
+          }
+          var map = new Map({
+            basemap: "dark-gray-vector"
+          });
+
+          var view = new MapView({
+            container: "viewDiv",
+            map: map,
+            zoom: 13,
+            center: [-73.549884, 40.699494] // longitude, latitude
+          });
+
+          var popupTemplate = { // autocasts as new PopupTemplate()
+           title: "{Name}",
+           content:`<ul>
+                     <li>Sub Name: {sub_name}</li>
+                     <li>Feeder Number: {feeder_name}</li>
+                     <li>HC Max (kW): {HC_max_kW}</li>
+                     <li>HC Min (kW): {HC_min_kW}</li>
+                     <li>Connected DG (kW): {DG_kW}</li>
+                     <li>DG in Queue (kW): {dg_in_queue}</li>
+                    </ul>`
+         };
+
+          var url = `https://services1.arcgis.com/0cYxNkh7FJosf1xi/arcgis/rest/services/oh_primary_wire_hcm/FeatureServer/0`
+          var hcm_layer = new FeatureLayer({
+            url:url,
+            title: "Primary Wire Max Hosting Capacity",
+            popupEnabled:true,
+            popupTemplate:popupTemplate
+          })
+
+          console.log(hcm_layer.popupEnabled)
+
+          map.add(hcm_layer)
+
+          var basemapGallery = new BasemapGallery({
+            view:view,
+            container: document.createElement("div")
+          });
+
+          var legend = new Legend({
+            view:view,
+            layerInfos:[{
+              layer: hcm_layer
+            }]
+          });
+
+
+          var basemapExpand = new Expand({
+            view:view,
+            content:basemapGallery,
+            expanded:false
+          });
+
+          var legendExpand = new Expand({
+            view:view,
+            content:legend,
+            expanded:false
+          })
+
+          console.log(view.popup);
+          view.ui.add(basemapExpand, {
+            position:"top-right"
+          });
+
+          view.ui.add(legendExpand, {
+            position:"top-right"
+          });
+        }
+
+
 
         // temporary way to access private resource; will need to be changed later using either Token-based or OAutho if required
         // https://developers.arcgis.com/documentation/core-concepts/security-and-authentication/
@@ -77,62 +147,6 @@ function(Map,MapView,esriRequest,Portal,OAuthInfo,esriId,domStyle, domAttr, on, 
         //   esriId.registerToken(token);
         // });
 
-        var popupTemplate = { // autocasts as new PopupTemplate()
-         title: "{Name}",
-         content:`<ul>
-                   <li>Sub Name: {sub_name}</li>
-                   <li>Feeder Number: {feeder_name}</li>
-                   <li>HC Max (kW): {HC_max_kW}</li>
-                   <li>HC Min (kW): {HC_min_kW}</li>
-                   <li>Connected DG (kW): {DG_kW}</li>
-                   <li>DG in Queue (kW): {dg_in_queue}</li>
-                  </ul>`
-       };
 
-        var url = `https://services1.arcgis.com/0cYxNkh7FJosf1xi/arcgis/rest/services/oh_primary_wire_hcm/FeatureServer/0`
-        var hcm_layer = new FeatureLayer({
-          url:url,
-          title: "Primary Wire Max Hosting Capacity",
-          popupEnabled:true,
-          popupTemplate:popupTemplate
-        })
-
-        console.log(hcm_layer.popupEnabled)
-
-        map.add(hcm_layer)
-
-        var basemapGallery = new BasemapGallery({
-          view:view,
-          container: document.createElement("div")
-        });
-
-        var legend = new Legend({
-          view:view,
-          layerInfos:[{
-            layer: hcm_layer
-          }]
-        });
-
-
-        var basemapExpand = new Expand({
-          view:view,
-          content:basemapGallery,
-          expanded:false
-        });
-
-        var legendExpand = new Expand({
-          view:view,
-          content:legend,
-          expanded:false
-        })
-
-        console.log(view.popup);
-        view.ui.add(basemapExpand, {
-          position:"top-right"
-        });
-
-        view.ui.add(legendExpand, {
-          position:"top-right"
-        });
 
       });
