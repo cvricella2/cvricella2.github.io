@@ -43,8 +43,7 @@ function(Map,MapView,esriRequest,Portal,OAuthInfo,esriId, domStyle, domAttr, on,
          dom.byId('anonymousPanel').style.display = 'none';
          dom.byId('personalizedPanel').style.display = 'block'
        });
-
-      });
+       
         var map = new Map({
           basemap: "dark-gray-vector"
         });
