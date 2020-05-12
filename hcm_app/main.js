@@ -26,7 +26,7 @@ function(Map,MapView,esriRequest,Portal,OAuthInfo,esriId,domStyle, domAttr, on, 
           popup: true // inline redirects don't require any additional app configuration
         });
 
-        displayMap();
+        
 
        //  esriId.registerOAuthInfos([info]);
        //
@@ -49,7 +49,7 @@ function(Map,MapView,esriRequest,Portal,OAuthInfo,esriId,domStyle, domAttr, on, 
 
 
 
-        function displayMap(){
+
           var portal = new Portal();
 
           portal.load().then(function(){
@@ -124,7 +124,7 @@ function(Map,MapView,esriRequest,Portal,OAuthInfo,esriId,domStyle, domAttr, on, 
           view.ui.add(legendExpand, {
             position:"top-right"
           });
-        }
+
 
 
 
