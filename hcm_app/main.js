@@ -15,7 +15,7 @@ require([
   "esri/widgets/Expand"
 ],
 
-function(Map,MapView,esriRequest,Portal,OAuthInfo,esriId, domStyle, domAttr, on, dom, FeatureLayer,BasemapGallery,Legend,Expand) {
+function(Map,MapView,esriRequest,Portal,OAuthInfo,esriId,domStyle, domAttr, on, dom, FeatureLayer,BasemapGallery,Legend,Expand) {
 
         // ArcGIS Online or your portal address
         var portalUrl = "https://www.arcgis.com/sharing";
@@ -39,7 +39,7 @@ function(Map,MapView,esriRequest,Portal,OAuthInfo,esriId, domStyle, domAttr, on,
           window.location.reload();
         });
 
-        identityManager.checkSignInStatus(portalUrl).then(function() {
+        esriId.checkSignInStatus(portalUrl).then(function() {
          dom.byId('anonymousPanel').style.display = 'none';
          dom.byId('personalizedPanel').style.display = 'block'
        });
