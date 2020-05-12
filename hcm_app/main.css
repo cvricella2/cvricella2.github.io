@@ -10,10 +10,27 @@ body, #viewDiv{
   height: 100%;
   margin: 0px;
   padding: 0px;
+  display: none;
 }
 
 .action {
   color: blue;
   cursor: pointer;
   text-decoration: underline;
+}
+
+#anonymousPanel{
+  display: block;
+  padding: 5px;
+  text-align: center;
+}
+
+#personalizedPanel{
+  display: none;
+  padding: 5px;
+  text-align: center;
+}
+
+#userId{
+  font-weight:bold;
 }
