@@ -29,27 +29,27 @@ function(Map,MapView,esriRequest,Portal,OAuthInfo,esriId,domStyle, domAttr, on, 
 
 
         esriId.registerOAuthInfos([info]);
-       //
-       //  // send users to arcgis.com to login
-       //  on(dom.byId("sign-in"), "click", function() {
-       //    esriId.getCredential(portalUrl);
-       //  });
-       //
-       //  // log out and reload
-       //  on(dom.byId("sign-out"), "click", function() {
-       //    esriId.destroyCredentials();
-       //    window.location.reload();
-       //  });
-       //
-       //  esriId.checkSignInStatus(portalUrl).then(function() {
-       //   dom.byId('anonymousPanel').style.display = 'none';
-       //   dom.byId('personalizedPanel').style.display = 'block'
-       //   displayMap();
-       // });
+
+        // send users to arcgis.com to login
+        on(dom.byId("sign-in"), "click", function() {
+          esriId.getCredential(portalUrl);
+        });
+
+        // log out and reload
+        on(dom.byId("sign-out"), "click", function() {
+          esriId.destroyCredentials();
+          window.location.reload();
+        });
+
+        esriId.checkSignInStatus(portalUrl).then(function() {
+         dom.byId('anonymousPanel').style.display = 'none';
+         dom.byId('personalizedPanel').style.display = 'block'
+         displayMap();
+       });
 
 
 
-
+        function displayMap(){
           var portal = new Portal();
 
           portal.load().then(function(){
@@ -124,6 +124,7 @@ function(Map,MapView,esriRequest,Portal,OAuthInfo,esriId,domStyle, domAttr, on, 
           view.ui.add(legendExpand, {
             position:"top-right"
           });
+        }
 
 
 

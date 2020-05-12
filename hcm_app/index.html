@@ -1,16 +1,40 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="utf-8">
-    <title> PSEGLI HCM </title>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no"
+  />
+  <title>ArcGIS JS API Tutorials: Access traffic using OAuth2</title>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.15/esri/css/main.css">
+  <script src="https://js.arcgis.com/4.15/"></script>
+  <style>
+    html,
+    body, #viewDiv{
+      font-family: Avenir Next W00;
+      font-size: 14px;
+      width: 100%;
+      height: 100%;
+      margin: 0px;
+      padding: 0px;
+    }
 
-    <link rel="stylesheet" href="https://js.arcgis.com/4.14/esri/themes/dark-blue/main.css"></link>
-    <link rel="stylesheet" href="main.css"></link>
-    <script src="https://js.arcgis.com/4.14/"></script>
-    <script src="main.js"></script>
-  </head>
-  <body>
-    <div id="viewDiv"></div>
-  </body>
+    .action {
+      color: blue;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div id="anonymousPanel" style="display: block; padding: 5px; text-align: center;">
+    <span id="sign-in" class="action">Sign In</span> to see live traffic.
+  </div>
+
+  <div id="personalizedPanel" style="display: none; padding: 5px; text-align: center;">
+    Welcome <span id="userId" style="font-weight: bold;"></span> &nbsp;-&nbsp;
+    <span id="sign-out" class="action">Sign Out</span>
+  </div>
+  <!-- for the map -->
+  <div id="viewDiv" style="display: none;"></div>
+</body>
 </html>
