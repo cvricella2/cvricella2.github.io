@@ -26,7 +26,7 @@ function(Map,MapView,esriRequest,Portal,OAuthInfo,esriId, domStyle, domAttr, on,
           popup: false // inline redirects don't require any additional app configuration
         });
 
-        identityManager.registerOAuthInfos([info]);
+        esriId.registerOAuthInfos([info]);
 
         // send users to arcgis.com to login
         on(dom.byId("sign-in"), "click", function() {
@@ -43,7 +43,7 @@ function(Map,MapView,esriRequest,Portal,OAuthInfo,esriId, domStyle, domAttr, on,
          dom.byId('anonymousPanel').style.display = 'none';
          dom.byId('personalizedPanel').style.display = 'block'
        });
-       
+
         var map = new Map({
           basemap: "dark-gray-vector"
         });
