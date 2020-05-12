@@ -26,8 +26,6 @@ function(Map,MapView,esriRequest,Portal,OAuthInfo,esriId,domStyle, domAttr, on, 
           popup: false // inline redirects don't require any additional app configuration
         });
 
-
-
         esriId.registerOAuthInfos([info]);
 
         // send users to arcgis.com to login
@@ -46,8 +44,6 @@ function(Map,MapView,esriRequest,Portal,OAuthInfo,esriId,domStyle, domAttr, on, 
          dom.byId('personalizedPanel').style.display = 'block'
          displayMap();
        });
-
-
 
         function displayMap(){
           var portal = new Portal();
