@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta
+      name="viewport"
+      charset="utf-8"
+      content="width=device-width, initial-scale=1"
+    />
+    <title>Finn Maps</title>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.15/esri/themes/light/main.css"></link>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.16/dgrid/css/dgrid.css"></link>
+    <link rel="stylesheet" href="main.css"></link>
+    <script src="https://js.arcgis.com/4.16/"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="main.js"></script>
+  </head>
+  <body>
+    <div id="flexContainer">
+      <div id="sidebar">
+        <h2> Finn Maps </h2>
+        <p> Click any of the points on the map to view details on Finn's many Adventures! </p>
+        <div id= "visitAttachments"></div>
+        <a href="#" id="nextAttach" class = "sidebarButton"> Next &raquo;</a>
+        <div id="visitInfo"></div>
+        <a href="#" id="nextVisit" class = "sidebarButton">See Next Visit &raquo;</a>
+        <div id="signUpInfo">
+          <p><strong> Want to stay up to date with Finn? <a id="openForm" href="#">Click Here</a></strong></p>
+        </div>
+      </div>
+      <div id="viewDiv"></div>
+      <div id="overlay"></div>
+    </div>
+    <form name = "submitForm">
+      <div id ="formContainer">
+        <a href="#" id="closeForm">x</a>
+        <h1> Recieve Updates Regarding Finn Maps? </h1>
+        <label for="name"><strong>Name</strong></label>
+        <input type="text" placeholder = "Enter Full Name" name="name" class="formField" id="name">
+
+        <label for="email"><strong>Email</strong></label>
+        <input type="text" placeholder = "Enter Email Address" name="email" class="formField" id="email">
+
+        <label for="phone_number"><strong>Phone Number</strong></label>
+        <input type="text" placeholder = "Enter Phone Number" name="phone_number" class="formField" id="phone_number">
+
+        <!-- Not using now, but maybe later -->
+        <!--<label for="notify" class = "formLabel"><strong>Receieve Notifications?</strong></label>
+        <select name="notify" class="formField" id="notify">
+          <option disabled selected value> - Select - </option>
+          <option value="1">Yes</option>
+          <option value="2">No</option>
+        </select> -->
+
+        <button type ="button" id="submitFormBtn">Submit</button>
+        <p>
+          Your information will be stored on a secure server and never shared with anyone.
+          if you opt for notifications you will recieve text messages and/or emails when Finn is going to
+          visit somewhere and when any major changes happen to Finn Maps. Your name is not required unless you would like
+          to recieve a personalized notification (e.g. Hi Karen!). This could change at a later date for non-profit purposes
+          (e.g. donations to animal shelters Finn Maps affiliates with), if it does you will be notified and given the option to opt out.
+          Currently you cannot remove yourself from the notification list through the application but email cvricella2@outlook.com with
+          "opt out" in the subject line and your contact info in the body and I will remove you. A future update will provide this capability
+          through the application.
+        </p>
+        <p id = "formFooter"> All The Best ◕‿◕ </p>
+      </div>
+    </form>
+  </body>
+  </html>
