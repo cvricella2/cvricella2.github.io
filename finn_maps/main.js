@@ -1,10 +1,13 @@
 //TO DO:
-// Add ability for users to add new places for finn to visit
-// Add tracking
-// Add ability for users to sign up to get text when finn is going on an adventure
-// Add previous buttons to sidebar
-// Mobile Design
-// Adjust styling of pop ups and editor
+// Remove pop ups; move all pop up data to sidebar
+// change fillRankStars() to add spans instead of changing class names?
+// bug where if finn did not rank a place it will get 5 stars (duh because of the way fillRankStars() works)
+// fix bug where sidebar clears the stars linger for a second
+// server side python scripts
+// add new layer to house finns current location
+// get rid of editing
+// update editing settings on AGOL
+
 
 require([
   "esri/views/MapView",
@@ -89,10 +92,15 @@ require([
 
 let relatedData = {};
 const sidebar = document.getElementById("sidebar");
+const sidebarHeader = document.getElementById("sidebarHeader");
+const sidebarSubHeader = document.getElementById('sidebarSubHeader');
 const visitInfo = document.getElementById("visitInfo");
 const visitAttachments = document.getElementById("visitAttachments");
 const nextVisitButton = document.getElementById("nextVisit");
 const nextAttachButton = document.getElementById("nextAttach");
+const starContainer = document.getElementById("starContainer");
+const stars = document.getElementsByClassName("fa fa-star");
+const filledStars = document.getElementsByClassName("fa fa-star checked");
 const noImgVid = document.createElement("p");
 const noImgVidTxt = document.createTextNode("Finn Didin't Take Any Photos or Videos During This Visit!");
 const noParagraph = document.createElement("p");
@@ -135,10 +143,13 @@ noImgVid.id = "noImgVid";
    visitInfo.innerHTML = " ";
    nextVisitButton.style.display = "none";
    nextAttachButton.style.display = "none";
+   clearRankStars();
  };
 
 /** initializes the sidebar when a Finn place is clicked on the map */
  function initializeSideBar(relatedData) {
+   console.log(relatedData);
+   starContainer.style.display = 'flex';
    let relatedDataKeys = Object.keys(relatedData)
    // If related data is empty let the user no by displaying
    // noImgVid and noParagraph elements. This will happen if
@@ -195,6 +206,23 @@ noImgVid.id = "noImgVid";
    }
  }
 
+ function fillRankStars (ranking) {
+     let breakpoint = 1;
+     for (star of stars) {
+       star.className = "fa fa-star checked";
+       if (breakpoint === ranking ) {
+         break
+       }
+       breakpoint++;
+     }
+ }
+
+ function clearRankStars(){
+     for (star of filledStars) {
+       star.className = "fa fa-star"
+     };
+ }
+
 
  function queryRelatedFeatures(screenPoint) {
    relatedData = {};
@@ -204,6 +232,10 @@ noImgVid.id = "noImgVid";
        return
      }
      placeName = response.results[0].graphic.attributes.name
+     let finnRanking = response.results[0].graphic.attributes.finn_rank
+     sidebarHeader.innerHTML = placeName;
+     sidebarSubHeader.innerHTML = "";
+     fillRankStars(finnRanking);
      return response.results[0].graphic.attributes.OBJECTID
    }).then(function(objectId) {
        // Query the for the related features for the features ids found
@@ -285,6 +317,9 @@ noImgVid.id = "noImgVid";
      })
    }
     }).catch(function(error){
+      sidebarHeader.innerHTML = "Finn Maps";
+      sidebarSubHeader.innerHTML = "Click any of the points on the map to view details on Finn's many Adventures!";
+      starContainer.style.display = "none";
       console.log(error);
     });
    };
