@@ -1,12 +1,8 @@
 //TO DO:
-// Remove pop ups; move all pop up data to sidebar
-// change fillRankStars() to add spans instead of changing class names?
-// bug where if finn did not rank a place it will get 5 stars (duh because of the way fillRankStars() works)
-// fix bug where sidebar clears the stars linger for a second
 // server side python scripts
 // add new layer to house finns current location
 // get rid of editing
-// update editing settings on AGOL
+// republish layer on agol, publish user information table sep. So it can't be viewed or edited. 
 
 
 require([
@@ -70,8 +66,7 @@ require([
   }
 
   var finnPlaces = new FeatureLayer({
-    url:"https://services2.arcgis.com/O48sbyo4drQXsscH/arcgis/rest/services/Finn_Maps_HFS/FeatureServer/0",
-    popupTemplate:places_template
+    url:"https://services2.arcgis.com/O48sbyo4drQXsscH/arcgis/rest/services/Finn_Maps_HFS/FeatureServer/0"
   });
 
 
@@ -89,7 +84,7 @@ require([
 
 
 
-
+// create variables in global scope that are used throughout application
 let relatedData = {};
 const sidebar = document.getElementById("sidebar");
 const sidebarHeader = document.getElementById("sidebarHeader");
@@ -98,16 +93,18 @@ const visitInfo = document.getElementById("visitInfo");
 const visitAttachments = document.getElementById("visitAttachments");
 const nextVisitButton = document.getElementById("nextVisit");
 const nextAttachButton = document.getElementById("nextAttach");
-const starContainer = document.getElementById("starContainer");
-const stars = document.getElementsByClassName("fa fa-star");
-const filledStars = document.getElementsByClassName("fa fa-star checked");
+const visitHeader = document.getElementById("visitHeader");
+const visitDate = document.createElement("p");
 const noImgVid = document.createElement("p");
-const noImgVidTxt = document.createTextNode("Finn Didin't Take Any Photos or Videos During This Visit!");
 const noParagraph = document.createElement("p");
-const noParagraphTxt = document.createTextNode("Finn Didin't Record Any Information Yet About This Visit!")
-noImgVid.appendChild(noImgVidTxt);
-noParagraph.appendChild(noParagraphTxt);
+const rankText = document.createElement("p")
+
 noImgVid.id = "noImgVid";
+visitDate.id = "visitDate";
+rankText.id = "finnRank";
+rankText.innerHTML = "Finn Ranking: "
+noParagraph.innerHTML = "Finn Didin't Record Any Information Yet About This Visit!"
+noImgVid.innerHTML = "Finn Didin't Record Any Information Yet About This Visit!"
 
  view.on("click", function (event) {
    clearSideBar()
@@ -119,22 +116,7 @@ noImgVid.id = "noImgVid";
  });
 
  nextAttachButton.addEventListener("click", function(event){
-   let visit_paragraph = visitInfo.children[0]
-   let current_oid = parseInt(visit_paragraph.id);
-   let visit_attachment = visitAttachments.children[0]
-   let relatedDataKeys = Object.keys(relatedData);
-   let current_idx = relatedDataKeys.indexOf(`${visit_paragraph.id}`)
-   let attachments = relatedData[current_oid].attachments;
-   if(!(attachments.length === 0)){
-     let attach_idx = attachments.indexOf(visit_attachment);
-
-     if(attach_idx + 1 === attachments.length) {
-          visit_attachment.replaceWith(attachments[0])
-     } else {
-          visit_attachment.replaceWith(attachments[attach_idx+1])
-        };
-   }
-
+   nextAttach(relatedData);
   });
 
 /** Clears the sidebar if anywhere different is clicked on the map from the last click */
@@ -143,18 +125,20 @@ noImgVid.id = "noImgVid";
    visitInfo.innerHTML = " ";
    nextVisitButton.style.display = "none";
    nextAttachButton.style.display = "none";
-   clearRankStars();
+   visitHeader.innerHTML = " ";
+   visitDate.innerHTML = " ";
  };
 
 /** initializes the sidebar when a Finn place is clicked on the map */
  function initializeSideBar(relatedData) {
-   console.log(relatedData);
-   starContainer.style.display = 'flex';
+   visitHeader.style.display = 'flex';
+   visitHeader.appendChild(visitDate);
    let relatedDataKeys = Object.keys(relatedData)
    // If related data is empty let the user no by displaying
    // noImgVid and noParagraph elements. This will happen if
    // There are no related features to query when this function is
    // called by queryRelatedFetures().
+   // Then return.
    if (relatedDataKeys.length === 0) {
      visitAttachments.append(noImgVid);
      visitInfo.append(noParagraph);
@@ -170,6 +154,7 @@ noImgVid.id = "noImgVid";
    visitInfo.append(relatedData[relatedDataKeys[0]].visit_paragraph);
    nextVisitButton.style.display = "block";
    nextAttachButton.style.display = "block";
+   visitDate.innerHTML = relatedData[relatedDataKeys[0]].date_of_visit;
  };
 
 /** nextVisit() controls how the user clicks through visits associated with each Finn Place.
@@ -197,6 +182,7 @@ noImgVid.id = "noImgVid";
    if (relatedDataKeys.length === next_idx) { next_idx = 0 }
    let visit = relatedData[relatedDataKeys[next_idx]]
    visit_paragraph.replaceWith(visit.visit_paragraph);
+   visitDate.innerHTML = visit.date_of_visit;
    // One last check, need to make sure we actually have attachments for the current visit.
    // if not then the noImgVid element stores some text to let the user know.
    if(!(visit.attachments.length === 0)) {
@@ -206,37 +192,61 @@ noImgVid.id = "noImgVid";
    }
  }
 
- function fillRankStars (ranking) {
+ function nextAttach(relatedData) {
+   let visit_paragraph = visitInfo.children[0]
+   let current_oid = parseInt(visit_paragraph.id);
+   let visit_attachment = visitAttachments.children[0]
+   let relatedDataKeys = Object.keys(relatedData);
+   let current_idx = relatedDataKeys.indexOf(`${visit_paragraph.id}`)
+   let attachments = relatedData[current_oid].attachments;
+   if(!(attachments.length === 0)){
+     let attach_idx = attachments.indexOf(visit_attachment);
+
+     if(attach_idx + 1 === attachments.length) {
+          visit_attachment.replaceWith(attachments[0])
+     } else {
+          visit_attachment.replaceWith(attachments[attach_idx+1])
+        };
+   }
+ }
+
+ function addRankStars (ranking) {
      let breakpoint = 1;
-     for (star of stars) {
-       star.className = "fa fa-star checked";
-       if (breakpoint === ranking ) {
-         break
+     if (ranking) {
+       visitHeader.appendChild(rankText);
+       for (x of Array(ranking).keys()) {
+         let span = document.createElement("span")
+         span.className = "fa fa-star checked"
+         visitHeader.appendChild(span)
+         if (breakpoint === ranking ) {
+           break
+         }
+         breakpoint++;
        }
-       breakpoint++;
      }
  }
-
- function clearRankStars(){
-     for (star of filledStars) {
-       star.className = "fa fa-star"
-     };
- }
-
-
+ let highlight;
  function queryRelatedFeatures(screenPoint) {
    relatedData = {};
-   let placeName;
    view.hitTest(screenPoint).then(function(response){
      if(response.results.length === 0) {
+       // Remove highlight if anywhere on map is clicked.
+       highlight.remove();
        return
      }
-     placeName = response.results[0].graphic.attributes.name
-     let finnRanking = response.results[0].graphic.attributes.finn_rank
-     sidebarHeader.innerHTML = placeName;
+     let graphic = response.results[0].graphic
+     // Highlights feature when clicked, removes highlight if
+     // new feature is clicked.
+     view.whenLayerView(graphic.layer).then(function(layerView){
+       if (highlight) {
+         highlight.remove();
+      }
+       highlight = layerView.highlight(graphic);
+     });
+     sidebarHeader.innerHTML = graphic.attributes.name;
      sidebarSubHeader.innerHTML = "";
-     fillRankStars(finnRanking);
-     return response.results[0].graphic.attributes.OBJECTID
+     addRankStars(graphic.attributes.finn_rank);
+     return graphic.attributes.OBJECTID
    }).then(function(objectId) {
        // Query the for the related features for the features ids found
        return finnPlaces.queryRelatedFeatures({
@@ -245,10 +255,6 @@ noImgVid.id = "noImgVid";
          objectIds: objectId
        });
      }).then(function (relatedFeatureSetByObjectId) {
-       // if(!relatedFeatureSetByObjectId) {
-       //   console.log("Triggered")
-       //   return
-       // }
        let relatedFeatureSetKeys = Object.keys(relatedFeatureSetByObjectId);
        if (relatedFeatureSetKeys.length === 0){
          initializeSideBar(relatedData);
@@ -269,7 +275,7 @@ noImgVid.id = "noImgVid";
            let num_ticks_found = feature.attributes.num_ticks_found
            let note = feature.attributes.note
 
-           relatedData[oid] = {date_of_vist:formatted_date,
+           relatedData[oid] = {date_of_visit:formatted_date,
                               ticks_found:ticks_found,
                               num_ticks_found:num_ticks_found,
                               note:note,
@@ -277,11 +283,8 @@ noImgVid.id = "noImgVid";
 
            let visit_paragraph = document.createElement("p")
            visit_paragraph.id = feature.attributes.OBJECTID
-           visit_paragraph.innerHTML = (`Finn visited ${placeName} on ${formatted_date}.
-             \n The number of ticks found on him was: ${feature.attributes.num_ticks_found}.
-             \n ${feature.attributes.note}`)
-
-             relatedData[feature.attributes.OBJECTID].visit_paragraph = visit_paragraph;
+           visit_paragraph.innerHTML = feature.attributes.note
+           relatedData[feature.attributes.OBJECTID].visit_paragraph = visit_paragraph;
          });
 
          let relatedDataKeys = Object.keys(relatedData);
@@ -313,13 +316,13 @@ noImgVid.id = "noImgVid";
              })
            })
          })
-        setTimeout(function(){initializeSideBar(relatedData)},1000);
+        setTimeout(function(){initializeSideBar(relatedData)},500);
      })
    }
     }).catch(function(error){
       sidebarHeader.innerHTML = "Finn Maps";
       sidebarSubHeader.innerHTML = "Click any of the points on the map to view details on Finn's many Adventures!";
-      starContainer.style.display = "none";
+      visitHeader.style.display = "none";
       console.log(error);
     });
    };

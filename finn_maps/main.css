@@ -50,7 +50,14 @@ body {
 
 .sidebarButton {
   text-align: justify;
+  font-style: bold;
+  text-decoration: none;
   display:none;
+  color:black;
+}
+
+.sidebarButton:hover{
+  color:blue;
 }
 
 .queryImg {
@@ -136,9 +143,22 @@ body {
   opacity: 25%;
 }
 
-#starContainer {
+#visitHeader {
   display:none;
   flex-direction: row;
+  margin:.5em;
+}
+
+#finnRank{
+  margin:0 .25em 0 0;
+}
+
+#visitDate {
+  margin: 0 0 0 auto;
+}
+
+.fa {
+  margin-top: .1em;
 }
 
 .checked {
@@ -158,8 +178,4 @@ body {
     margin:0;
   }
 
-  /* #viewDiv{
-    display:flex;
-    align-items: center;
-  } */
 }
