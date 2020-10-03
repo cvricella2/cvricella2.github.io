@@ -31,10 +31,18 @@ body {
     border: solid;
    }
 
+#sidebarHeader{
+  display:flex;
+  flex-direction:column;
+}
+
+.headerItem{
+  align-self: center;
+}
+
 #sidebarContent {
   display:flex;
   flex-direction: column;
-  /* overflow: auto; */
 }
 
 #sidebarContent h2 {
@@ -67,8 +75,6 @@ body {
 
 #sidebarFooter{
   margin-top: auto;
-  margin-left: .5em;
-  margin-right:.5em;
   align-self: center;
 }
 
@@ -149,7 +155,6 @@ body {
 #visitHeader {
   display:none;
   flex-direction: row;
-  margin:.5em;
 }
 
 #finnRank{
@@ -169,31 +174,65 @@ body {
 }
 
 @media screen and (max-width: 500px) {
+  .sidebarItem{
+    margin:.25em;
+  }
   #flexContainer{
     flex-direction: column;
   }
 
   #formContainer{
     width:70%;
+    font-size: smaller;
   }
 
   #formFooter{
     margin:0;
   }
 
-   /* #viewDiv {
-    flex:2;
-  }  */
+  #sidebar{
+    flex:3;
+    font-size:smaller;
+    overflow:hidden;
+  }
 
-  #sidebar {
-      flex:3;
-      overflow: scroll;
-     }
+  #sidebarContent{
+    overflow:auto;
+    margin-bottom:.75em;
+  }
+
+  .headerItem{
+    margin:.25em;
+  }
 
 }
 
-@media screen and (orientation: landscape){
+@media screen and (orientation: landscape) and (max-width: 800px){
+  .sidebarItem{
+    margin:.25em;
+  }
+
+  #formContainer{
+    width:70%;
+    font-size: smaller;
+  }
+
+  #formFooter{
+    margin:0;
+  }
+
   #sidebar{
     flex:3;
+    font-size:smaller;
+    overflow:hidden;
+  }
+
+  #sidebarContent{
+    overflow:auto;
+    margin-bottom:.75em;
+  }
+
+  .headerItem{
+    margin:.25em;
   }
 }

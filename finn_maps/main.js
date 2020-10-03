@@ -2,7 +2,7 @@
 // server side python scripts
 // add new layer to house finns current location
 // get rid of editing
-// republish layer on agol, publish user information table sep. So it can't be viewed or edited. 
+// republish layer on agol, publish user information table sep. So it can't be viewed or edited.
 
 
 require([
@@ -12,9 +12,10 @@ require([
   "esri/popup/RelatedRecordsInfo",
   "esri/widgets/Editor",
   "esri/widgets/Expand",
-  "esri/request"
+  "esri/request",
+  "esri/widgets/Legend"
 ],
-  function(MapView,Map,FeatureLayer,RelatedRecordsInfo,Editor,Expand,esriRequest) {
+  function(MapView,Map,FeatureLayer,RelatedRecordsInfo,Editor,Expand,esriRequest,Legend) {
 
   var map = new Map({
     basemap:"osm"
@@ -24,7 +25,7 @@ require([
     map: map,
     container: "viewDiv",
     center: [-72.991659,40.902234],
-    zoom:10
+    zoom:9
   });
 
   const relatedRecords = new RelatedRecordsInfo({
@@ -87,13 +88,14 @@ require([
 // create variables in global scope that are used throughout application
 let relatedData = {};
 const sidebar = document.getElementById("sidebar");
-const sidebarHeader = document.getElementById("sidebarHeader");
-const sidebarSubHeader = document.getElementById('sidebarSubHeader');
+const headerTitle = document.getElementById("headerTitle");
+const headerSubTitle = document.getElementById('headerSubTitle');
 const visitInfo = document.getElementById("visitInfo");
 const visitAttachments = document.getElementById("visitAttachments");
 const nextVisitButton = document.getElementById("nextVisit");
 const nextAttachButton = document.getElementById("nextAttach");
 const visitHeader = document.getElementById("visitHeader");
+const placeInfo = document.getElementById("placeInfo");
 const visitDate = document.createElement("p");
 const noImgVid = document.createElement("p");
 const noParagraph = document.createElement("p");
@@ -104,11 +106,11 @@ visitDate.id = "visitDate";
 rankText.id = "finnRank";
 rankText.innerHTML = "Finn Ranking: "
 noParagraph.innerHTML = "Finn Didin't Record Any Information Yet About This Visit!"
-noImgVid.innerHTML = "Finn Didin't Record Any Information Yet About This Visit!"
+noImgVid.innerHTML = "Finn Didin't Take Any Photos or Videos During This Visit!"
 
  view.on("click", function (event) {
    clearSideBar()
-   queryRelatedFeatures(event);
+   createSidebar(event);
  });
 
  nextVisitButton.addEventListener("click", function(event){
@@ -130,7 +132,7 @@ noImgVid.innerHTML = "Finn Didin't Record Any Information Yet About This Visit!"
  };
 
 /** initializes the sidebar when a Finn place is clicked on the map */
- function initializeSideBar(relatedData) {
+ function updateSidebar(relatedData) {
    visitHeader.style.display = 'flex';
    visitHeader.appendChild(visitDate);
    let relatedDataKeys = Object.keys(relatedData)
@@ -159,7 +161,7 @@ noImgVid.innerHTML = "Finn Didin't Record Any Information Yet About This Visit!"
 
 /** nextVisit() controls how the user clicks through visits associated with each Finn Place.
  * It's triggered when a user clicks on the "nextVisitButton" which is creatd with the
- * initializeSideBar() function.
+ * updateSidebar() function.
  * @param {object} relatedData - the relatedData object created by queryRelatedFetures()
  */
  function nextVisit(relatedData) {
@@ -225,13 +227,17 @@ noImgVid.innerHTML = "Finn Didin't Record Any Information Yet About This Visit!"
        }
      }
  }
+
  let highlight;
- function queryRelatedFeatures(screenPoint) {
+ function createSidebar(screenPoint) {
    relatedData = {};
    view.hitTest(screenPoint).then(function(response){
      if(response.results.length === 0) {
        // Remove highlight if anywhere on map is clicked.
        highlight.remove();
+       headerTitle.innerHTML = "Finn Maps";
+       headerSubTitle.innerHTML = "Click any of the points on the map to view details on Finn's many Adventures!";
+       visitHeader.style.display = "none";
        return
      }
      let graphic = response.results[0].graphic
@@ -243,8 +249,9 @@ noImgVid.innerHTML = "Finn Didin't Record Any Information Yet About This Visit!"
       }
        highlight = layerView.highlight(graphic);
      });
-     sidebarHeader.innerHTML = graphic.attributes.name;
-     sidebarSubHeader.innerHTML = "";
+     headerTitle.innerHTML = graphic.attributes.name;
+     placeInfo.innerHTML = graphic.attributes.comment;
+     headerSubTitle.innerHTML = "";
      addRankStars(graphic.attributes.finn_rank);
      return graphic.attributes.OBJECTID
    }).then(function(objectId) {
@@ -257,7 +264,7 @@ noImgVid.innerHTML = "Finn Didin't Record Any Information Yet About This Visit!"
      }).then(function (relatedFeatureSetByObjectId) {
        let relatedFeatureSetKeys = Object.keys(relatedFeatureSetByObjectId);
        if (relatedFeatureSetKeys.length === 0){
-         initializeSideBar(relatedData);
+         updateSidebar(relatedData);
        } else {
        relatedFeatureSetKeys.forEach(function(objectId) {
          // get the attributes of the FeatureSet
@@ -316,13 +323,10 @@ noImgVid.innerHTML = "Finn Didin't Record Any Information Yet About This Visit!"
              })
            })
          })
-        setTimeout(function(){initializeSideBar(relatedData)},500);
+        setTimeout(function(){updateSidebar(relatedData)},1000);
      })
    }
     }).catch(function(error){
-      sidebarHeader.innerHTML = "Finn Maps";
-      sidebarSubHeader.innerHTML = "Click any of the points on the map to view details on Finn's many Adventures!";
-      visitHeader.style.display = "none";
       console.log(error);
     });
    };
@@ -339,10 +343,27 @@ noImgVid.innerHTML = "Finn Didin't Record Any Information Yet About This Visit!"
          }],
    enabled: true, // default is true, set to false to disable editing functionality
    addEnabled: true, // default is true, set to false to disable the ability to add a new feature
-   updateEnabled: true, // default is true, set to false to disable the ability to edit an existing feature
-   deleteEnabled: true // default is true, set to false to disable the ability to delete features
+   updateEnabled: false, // default is true, set to false to disable the ability to edit an existing feature
+   deleteEnabled: false // default is true, set to false to disable the ability to delete features
  }]
 });
+
+  const legend = new Legend({
+    view: view,
+    layerInfos: [{
+      layer: finnPlaces,
+      title: " "
+    }]
+  });
+
+  const legendExpand = new Expand({
+    expandIconClass: "esri-icon-key",
+    view: view,
+    content: legend,
+    mode:"auto",
+    expandTooltip:"View Map View",
+    collapseTooltip:"Close Map Key"
+  });
 
 const editorExpand = new Expand({
   expandIconClass: "esri-icon-edit",
@@ -353,7 +374,10 @@ const editorExpand = new Expand({
   collapseTooltip:"Close Editor"
 });
 
+
+
   view.ui.add(editorExpand, "top-right");
+  view.ui.add(legendExpand, "top-right");
 
   map.add(finnPlaces);
 
