@@ -178,4 +178,13 @@ body {
     margin:0;
   }
 
+  #viewDiv {
+    flex:2;
+  }
+
+  #sidebar {
+      flex:3;
+      overflow: scroll;
+     }
+
 }
