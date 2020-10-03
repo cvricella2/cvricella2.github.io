@@ -113,9 +113,7 @@ body {
 
 #submitFormBtn {
   width:50%;
-  height:50%;
-  margin-top:1em;
-  margin-bottom:1em;
+  padding:.5em 0 .5em 0;
   align-self: center;
 }
 
@@ -206,7 +204,6 @@ body {
   }
 
   .headerItem{
-    padding:.25em;
     margin:.25em;
   }
 
