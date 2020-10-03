@@ -178,6 +178,7 @@ body {
 @media screen and (max-width: 500px) {
   .sidebarItem{
     margin:.25em;
+    padding:.25em;
   }
   #flexContainer{
     flex-direction: column;
@@ -214,6 +215,7 @@ body {
 @media screen and (orientation: landscape) and (max-width: 800px){
   .sidebarItem{
     margin:.25em;
+    padding:.25em;
   }
 
   #formContainer{
