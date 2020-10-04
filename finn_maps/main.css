@@ -87,7 +87,7 @@ body {
   position:absolute;
   z-index: 3;
   width:35%;
-  height:70%;
+  height:50%;
   left: 50%;
   top:50%;
   transform: translate(-50%, -50%);
@@ -102,15 +102,22 @@ body {
 
 .formField {
   padding:.5em;
-  margin: .5em 0 .5em 0;
   background: #f1f1f1;
   border: none;
 }
 
+.formLabel{
+  margin: .5em 0 .5em 0;
+}
+
 #submitFormBtn {
   width:50%;
-  padding:.5em 0 .5em 0;
+  margin: .5em 0 .5em 0;
   align-self: center;
+}
+
+#formDisclaimer {
+  margin:0;
 }
 
 #closeForm {
@@ -176,6 +183,7 @@ body {
 
   #formContainer{
     width:70%;
+    height:70%;
     font-size: smaller;
   }
 
@@ -208,6 +216,7 @@ body {
 
   #formContainer{
     width:70%;
+    height:70%;
     font-size: smaller;
   }
 
