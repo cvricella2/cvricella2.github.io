@@ -1,7 +1,7 @@
 //TO DO:
 // server side python scripts
 // add new layer to house finns current location
-// get rid of editing
+// Adjust styling of editior
 // republish layer on agol, publish user information table sep. So it can't be viewed or edited.
 
 
@@ -129,6 +129,7 @@ noImgVid.innerHTML = "Finn Didin't Take Any Photos or Videos During This Visit!"
    nextAttachButton.style.display = "none";
    visitHeader.innerHTML = " ";
    visitDate.innerHTML = " ";
+   placeInfo.innerHTML = " ";
  };
 
 /** initializes the sidebar when a Finn place is clicked on the map */
@@ -218,7 +219,8 @@ noImgVid.innerHTML = "Finn Didin't Take Any Photos or Videos During This Visit!"
        visitHeader.appendChild(rankText);
        for (x of Array(ranking).keys()) {
          let span = document.createElement("span")
-         span.className = "fa fa-star checked"
+         span.className = "checked"
+         span.innerHTML = "&#9733"
          visitHeader.appendChild(span)
          if (breakpoint === ranking ) {
            break
