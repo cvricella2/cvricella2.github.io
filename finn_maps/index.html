@@ -1,68 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Finn Maps</title>
-    <link rel="stylesheet" href="https://js.arcgis.com/4.16/esri/themes/light/main.css"></link>
-    <link rel="stylesheet" href="main.css"></link>
-    <script src="https://js.arcgis.com/4.16/"></script>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
-    <script src="main.js"></script>
+    <style type="text/css">
+      html, body {
+        height: 100%;
+      }
+      body {
+        background-color: #fff;
+        background: radial-gradient(circle at center, #fff 0%, #f8f8f8 75%, #ebebeb 100%);
+        color: #222;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-size: 1rem;
+        line-height: 1.5;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      main {
+        padding: 1rem;
+        text-align: center;
+      }
+      h1 {
+        font-size: 2.5rem;
+        line-height: 1.1;
+        margin: 0;
+      }
+      @media screen and (max-width: 480px) {
+        h1 {
+          font-size: 1.5rem;
+        }
+      }
+      h1::after {
+        content: "";
+        background-color: #ffe800;
+        background: repeating-linear-gradient(45deg, #ffe800, #ffe800 0.5rem, #222 0.5rem, #222 1.0rem);
+        display: block;
+        height: 0.5rem;
+        margin-top: 1rem;
+      }
+      p {
+        margin: 1rem 0 0 0;
+      }
+    </style>
   </head>
   <body>
-    <div id="flexContainer">
-      <div id="sidebar">
-        <div id="sidebarHeader" class="sidebarItem">
-          <h2 id ="headerTitle" class="headerItem"> Finn Maps </h2>
-          <p id="headerSubTitle" class="headerItem"> Click any of the points on the map to view details on Finn's many Adventures! </p>
-        </div>
-        <div id = "sidebarContent">
-          <p id="placeInfo" class="sidebarItem"></p>
-          <aside id="visitHeader" class="sidebarItem"></aside>
-          <div id= "visitAttachments" class = "sidebarItem"></div>
-          <a href="#" id="nextAttach" class = "sidebarButton sidebarItem"> <strong>Next</strong> &raquo;</a>
-          <div id="visitInfo" class = "sidebarItem"></div>
-          <a href="#" id="nextVisit" class = "sidebarButton sidebarItem"> <strong>See Next Visit</strong> &raquo;</a>
-        </div>
-        <div id="sidebarFooter" class = "sidebarItem">
-          <p><strong> Want to stay up to date with Finn? <a id="openForm" href="#">Click Here</a></strong></p>
-        </div>
-      </div>
-      <div id="viewDiv"></div>
-      <div id="overlay"></div>
-    </div>
-    <form name = "submitForm">
-      <div id ="formContainer">
-        <a href="#" id="closeForm">x</a>
-        <h3> Recieve Updates Regarding Finn Maps? </h3>
-        <label for="name" class="formLabel"><strong>Name</strong></label>
-        <input type="text" placeholder = "Enter Full Name" name="name" class="formField" id="name">
-
-        <label for="email" class="formLabel"><strong>Email</strong></label>
-        <input type="text" placeholder = "Enter Email Address" name="email" class="formField" id="email">
-
-        <label for="phone_number" class="formLabel"><strong>Phone Number</strong></label>
-        <input type="text" placeholder = "Enter Phone Number" name="phone_number" class="formField" id="phone_number">
-
-        <!-- Not using now, but maybe later -->
-        <!--<label for="notify" class = "formLabel"><strong>Receieve Notifications?</strong></label>
-        <select name="notify" class="formField" id="notify">
-          <option disabled selected value> - Select - </option>
-          <option value="1">Yes</option>
-          <option value="2">No</option>
-        </select> -->
-
-        <button type ="button" id="submitFormBtn">Submit</button>
-        <p id= "formDisclaimer">
-          Your information will be stored on a secure server and never shared with anyone.
-          if you opt for notifications you will recieve text messages and/or emails when Finn is going to
-          visit somewhere and when any major changes happen to Finn Maps. Your name is not required unless you would like
-          to recieve a personalized notification (e.g. Hi Karen!). If this ever changes you will be notified and given the option to opt out.
-        </p>
-        <p id = "formFooter"> All The Best ◕‿◕ </p>
-      </div>
-    </form>
+    <main>
+      <h1>Finn Maps</h1>
+      <p>Currently Under Construction, Check Back in a Week or So!</p>
+    </main>
   </body>
-  </html>
+</html>
