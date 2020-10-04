@@ -26,7 +26,7 @@ body {
     display:flex;
     flex-direction: column;
     flex:2;
-    padding:1em;
+    padding:1rem;
     overflow: auto;
     border: solid;
    }
@@ -38,7 +38,7 @@ body {
 
 .headerItem{
   align-self: center;
-  margin:.5em;
+  margin:.5rem;
 }
 
 #sidebarContent {
@@ -47,11 +47,11 @@ body {
 }
 
 #visitInfo p {
-  margin:0em;
+  margin:0rem;
 }
 
 .sidebarItem {
-  margin:.5em;
+  margin:.5rem;
 }
 
 .sidebarButton {
@@ -91,31 +91,38 @@ body {
   left: 50%;
   top:50%;
   transform: translate(-50%, -50%);
-  padding:1em 2em 2em 2em;
+  padding:1rem 2rem 2rem 2rem;
   overflow: auto;
 }
 
 #formContainer h3{
-  margin: .5em;
+  margin: .5rem;
   text-align: center;
 }
 
 .formField {
-  padding:.5em;
+  padding:.5rem;
   background: #f1f1f1;
   border: none;
 }
 
 .formLabel{
-  margin: .5em 0 .5em 0;
+  margin: .5rem 0 .5rem 0;
 }
 
 #submitFormBtn {
-  width:50%;
-  padding: .5em;
-  font-size:.75em;
-  margin: .5em 0 .5em 0;
-  align-self: center;
+  display: inline-block;
+  border: 1px solid black;
+  padding: 1rem 2rem;
+  margin: 0;
+  text-decoration: none;
+  background: #ccc;
+  color: #222;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
 #formDisclaimer {
@@ -144,7 +151,7 @@ body {
 #formFooter{
   align-self: center;
   margin-top:auto;
-  padding: 1em;
+  padding: 1rem;
 }
 
 #overlay{
@@ -164,7 +171,7 @@ body {
 }
 
 #finnRank{
-  margin:0 .25em 0 0;
+  margin:0 .25rem 0 0;
 }
 
 #visitDate {
@@ -176,16 +183,12 @@ body {
 }
 
 @media screen and (max-width: 500px) {
-  /* .sidebarItem{
-    margin:.25em;
-  } */
   #flexContainer{
     flex-direction: column;
   }
 
   #formContainer{
     width:70%;
-    height:75%;
     font-size: smaller;
   }
 
@@ -195,9 +198,9 @@ body {
 
   #submitFormBtn {
     width:50%;
-    padding: .75em;
-    font-size:.75em;
-    margin: .5em 0 .5em 0;
+    padding: .75rem;
+    font-size:.75rem;
+    margin: .5rem 0 .5rem 0;
     align-self: center;
   }
 
@@ -209,51 +212,18 @@ body {
 
   #sidebarContent{
     overflow:auto;
-    margin-bottom:.75em;
-    margin-top:.75em;
+    margin-bottom:.75rem;
+    margin-top:.75rem;
   }
 
   .headerItem{
-    margin:.25em;
+    margin:.25rem;
   }
 
 }
 
 @media screen and (orientation: landscape) and (max-width: 800px){
-  /* .sidebarItem{
-    margin:.25em;
-  } */
-
-  #formContainer{
-    width:70%;
-    height:75%;
-    font-size: smaller;
-  }
-
-  #formFooter{
-    margin:0;
-  }
-
-  #submitFormBtn {
-    width:50%;
-    padding: .75em;
-    font-size:.75em;
-    margin: .5em 0 .5em 0;
-    align-self: center;
-  }
-
-  #sidebar{
-    flex:4;
-    font-size:smaller;
-    overflow:hidden;
-  }
-
-  #sidebarContent{
-    overflow:auto;
-    margin-bottom:.75em;
-  }
-
-  .headerItem{
-    margin:.25em;
+  #flexContainer{
+    flex-direction: row;
   }
 }
