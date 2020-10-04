@@ -44,7 +44,6 @@ body {
 #sidebarContent {
   display:flex;
   flex-direction: column;
-  padding:.25em;
 }
 
 #visitInfo p {
@@ -168,9 +167,9 @@ body {
 }
 
 @media screen and (max-width: 500px) {
-  .sidebarItem{
+  /* .sidebarItem{
     margin:.25em;
-  }
+  } */
   #flexContainer{
     flex-direction: column;
   }
@@ -203,9 +202,9 @@ body {
 }
 
 @media screen and (orientation: landscape) and (max-width: 800px){
-  .sidebarItem{
+  /* .sidebarItem{
     margin:.25em;
-  }
+  } */
 
   #formContainer{
     width:70%;
