@@ -38,6 +38,7 @@ body {
 
 .headerItem{
   align-self: center;
+  margin:.5em;
 }
 
 #sidebarContent {
@@ -46,12 +47,8 @@ body {
   padding:.25em;
 }
 
-#sidebarContent h2 {
-  align-self:center;
-}
-
-#sidebarContent p {
-  align-self:center;
+#visitInfo p {
+  margin:0em;
 }
 
 .sidebarItem {
@@ -155,6 +152,7 @@ body {
 #visitHeader {
   display:none;
   flex-direction: row;
+  align-items: center;
 }
 
 #finnRank{
@@ -165,18 +163,13 @@ body {
   margin: 0 0 0 auto;
 }
 
-.fa {
-  margin-top: .1em;
-}
-
-.checked {
+.rankStar {
   color: orange;
 }
 
 @media screen and (max-width: 500px) {
   .sidebarItem{
     margin:.25em;
-    padding:.25em;
   }
   #flexContainer{
     flex-direction: column;
@@ -212,7 +205,6 @@ body {
 @media screen and (orientation: landscape) and (max-width: 800px){
   .sidebarItem{
     margin:.25em;
-    padding:.25em;
   }
 
   #formContainer{

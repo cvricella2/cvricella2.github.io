@@ -96,10 +96,10 @@ const nextVisitButton = document.getElementById("nextVisit");
 const nextAttachButton = document.getElementById("nextAttach");
 const visitHeader = document.getElementById("visitHeader");
 const placeInfo = document.getElementById("placeInfo");
-const visitDate = document.createElement("p");
+const visitDate = document.createElement("span");
 const noImgVid = document.createElement("p");
 const noParagraph = document.createElement("p");
-const rankText = document.createElement("p")
+const rankText = document.createElement("span")
 
 noImgVid.id = "noImgVid";
 visitDate.id = "visitDate";
@@ -219,7 +219,7 @@ noImgVid.innerHTML = "Finn Didin't Take Any Photos or Videos During This Visit!"
        visitHeader.appendChild(rankText);
        for (x of Array(ranking).keys()) {
          let span = document.createElement("span")
-         span.className = "checked"
+         span.className = "rankStar"
          span.innerHTML = "&#9733"
          visitHeader.appendChild(span)
          if (breakpoint === ranking ) {
