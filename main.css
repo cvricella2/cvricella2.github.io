@@ -40,7 +40,7 @@ body {
 }
 
 #portfolioContainer {
-    flex:4;
+    flex:4 0 auto;
     justify-content: center;
     align-items: center;
 }
@@ -61,7 +61,7 @@ body {
     max-height:100px;
     padding:1rem;
     margin-bottom:0;
-    flex: 1;
+    flex: 1 0 auto;
     border-top: solid;
 }
 
@@ -74,7 +74,7 @@ body {
     display:flex;
     margin:2.5rem .75rem 0rem .75rem;
     padding: 1rem;
-    flex: 1;
+    flex: 1 0 auto;
     max-width:500px;
     max-height:350px;
     overflow:auto;
@@ -114,6 +114,16 @@ i {
     cursor: pointer;
 }
 
+@media screen and (max-width: 1600px) {
+
+    html {
+        font-size:16px;
+    }
+
+ 
+   }
+  
+
 @media screen and (max-width: 700px) {
 
    #aboutContainer {
@@ -129,7 +139,7 @@ i {
    }
 
   }
-  
+
 @media screen and (orientation: landscape) and (max-width: 700px){
 
     #aboutContainer {
