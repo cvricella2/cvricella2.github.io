@@ -2,6 +2,10 @@
     box-sizing:border-box;
 }
 
+html {
+    font-size:20px;
+}
+
 html,
 body {
   height: 100%;
@@ -10,8 +14,6 @@ body {
   padding: 0;
   /* font-family: 'Share Tech Mono', monospace; */
   font-family: 'VT323', monospace;
-  overflow: hidden;
-  font-size:20px;
 }
 
 .theme{
@@ -25,22 +27,16 @@ body {
     width:100%;
     position:absolute;
     flex-direction:column;
-    overflow:auto;
-}
-
-#footerSection {
-    max-height:100px;
-    margin-bottom:0;
-    flex: 1;
+    overflow-y:scroll;
 }
 
 #aboutContainer {
     justify-content: center;
-    flex: 2;
+    flex-grow: 2;
 }
 
 #portfolioContainer {
-    flex:4 0 auto;
+    flex-grow:4;
     justify-content: center;
     align-items: center;
 }
@@ -52,6 +48,7 @@ body {
     padding:1rem;
     align-items:center;
     border-radius:20px;
+    flex-grow:4
 }
 
 #footerContainer{
@@ -61,29 +58,40 @@ body {
     max-height:100px;
     padding:1rem;
     margin-bottom:0;
-    flex: 1 0 auto;
+    flex-grow: 1;
     border-top: solid;
 }
 
 .flexSection{
     margin-bottom:1rem;
     display:flex;
+    flex-shrink:0;
 }
 
 .aboutSection{
     display:flex;
     margin:2.5rem .75rem 0rem .75rem;
     padding: 1rem;
-    flex: 1 0 auto;
+    flex: 1;
     max-width:500px;
     max-height:350px;
     overflow:auto;
     border-radius:20px;
+    text-orientation:upright ;
 }
 
 .projContainerControl {
     margin:.5rem;
     font-size:2rem;
+    flex:2;
+}
+
+#leftControl {
+    text-align:right;
+}
+
+#rightControl {
+    text-align:left;
 }
 
 .projImg {
@@ -114,33 +122,33 @@ i {
     cursor: pointer;
 }
 
-@media screen and (max-width: 1600px) {
-
-    html {
-        font-size:16px;
-    }
-
- 
-   }
-  
-
 @media screen and (max-width: 700px) {
 
    #aboutContainer {
        flex-direction:column;
+       margin-bottom:0rem;
    }
 
    html {
        font-size:16px;
    }
 
-   .projContainerControl {
-       font-size: 1.25rem;
-   }
+    .aboutSection{
+        margin:.5rem;
+        max-height:200px;
+    }
+
+    .projImg{
+        max-height:150px;
+    }
+
+    .projContainerControl{
+        font-size:1.5rem;
+    }
 
   }
-
-@media screen and (orientation: landscape) and (max-width: 700px){
+  
+@media screen and (orientation: landscape) and (max-height: 700px){
 
     #aboutContainer {
         flex-direction:row;
